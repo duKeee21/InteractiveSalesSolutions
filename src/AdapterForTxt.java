@@ -8,6 +8,10 @@ public class AdapterForTxt implements CustomerSource {
     MyReader myReader = new MyReader();
     String path;
 
+    public AdapterForTxt(String path) {
+        this.path = path;
+    }
+
     @Override
     public List<Customer> read() throws IOException {
         List<Customer> customers = new ArrayList<>();

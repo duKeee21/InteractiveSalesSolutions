@@ -1,17 +1,30 @@
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
-    public static void main(String[] args) {
-//        String filePathTxt = "discount_day.txt";
-//        String filePath = "discount_day_without_ext";
-//        DiscountCalculator discountCalculator = new DiscountCalculator();
-//        ArrayList<Double> example = new ArrayList<>();
-//        example.add(500.00);
-//        example.add(1000.00);
-//        example.add(2500.00);
-//        example.add(2742.60);
-//        ArrayList<Double> test = DiscountCalculator.calculateOrder(example);
-//        System.out.println(test);
+    public static void main(String[] args) throws IOException {
+        String filePathTxt = "discount_day.txt";
+        String filePath = "discount_day_without_ext";
+
+        AdapterForTxt adapterForTxt = new AdapterForTxt(filePathTxt);
+        DiscountCalculator discountCalculator = new DiscountCalculator(200,0.5,0.05);
+
+        List<Customer> customers = adapterForTxt.read();
+        customers.sort(null);
+
+        ArrayList<Double> orderedCement = new ArrayList<>();
+        for (Customer current : customers) {
+            orderedCement.add(current.getOrderCount());
+        }
+
+        ArrayList<Double> money = discountCalculator.calculateOrder(orderedCement);
+
+        for (int i = 0; i < customers.size(); i++) {
+            Customer c = customers.get(i);
+            System.out.println(c.getCompanyName() + " " + money.get(i));
+
+        }
 
     }
 }

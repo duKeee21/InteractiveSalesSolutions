@@ -1,6 +1,6 @@
 import java.time.LocalDateTime;
 
-public class Customer {
+public class Customer implements Comparable<Customer> {
     final LocalDateTime orderDate;
     final String companyName;
     final double orderCount;
@@ -22,5 +22,10 @@ public class Customer {
 
     public double getOrderCount() {
         return orderCount;
+    }
+
+    @Override
+    public int compareTo(Customer customer) {
+        return this.orderDate.compareTo(customer.orderDate);
     }
 }
