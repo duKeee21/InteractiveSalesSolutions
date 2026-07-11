@@ -1,10 +1,11 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class DiscountCalculator {
 
-    private double pricePerKg;
+    private final double pricePerKg;
     private double discount;
-    private double discountStep;
+    private final double discountStep;
 
     public DiscountCalculator(double pricePerKg, double discount, double discountStep) {
         this.pricePerKg = pricePerKg;
@@ -12,16 +13,15 @@ public class DiscountCalculator {
         this.discountStep = discountStep;
     }
 
-    public ArrayList<Double> calculateOrder(ArrayList<Double> order) {
+    public List<Double> calculateOrder(List<Double> order) {
         if (order == null || order.isEmpty()) {
             return new ArrayList<>();
         }
 
-        ArrayList<Double> money = new ArrayList<>();
+        List<Double> money = new ArrayList<>();
         double currentDiscount = discount;
 
-        for (int i = 0; i < order.size(); i++) {
-            double orderKg = order.get(i);
+        for (double orderKg : order) {
             double orderSum = orderKg * pricePerKg * (1 - discount);
             money.add(orderSum);
 
