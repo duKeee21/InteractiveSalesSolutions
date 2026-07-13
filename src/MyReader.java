@@ -7,5 +7,4 @@ public class MyReader {
     public List<String> readLines(String filePath) throws IOException {
         return Files.readAllLines(Paths.get(filePath));
     }
-
 }

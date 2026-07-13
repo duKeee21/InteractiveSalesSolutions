@@ -4,7 +4,7 @@ import java.util.List;
 public class DiscountCalculator {
 
     private final double pricePerKg;
-    private double discount;
+    private final double discount;
     private final double discountStep;
 
     public DiscountCalculator(double pricePerKg, double discount, double discountStep) {
@@ -22,16 +22,15 @@ public class DiscountCalculator {
         double currentDiscount = discount;
 
         for (double orderKg : order) {
-            double orderSum = orderKg * pricePerKg * (1 - discount);
+            double orderSum = orderKg * pricePerKg * (1 - currentDiscount);
             money.add(orderSum);
 
             currentDiscount -= discountStep;
-            if (discount < 0) {
-                discount = 0;
+            if (currentDiscount < 0) {
+                currentDiscount = 0;
             }
         }
 
         return money;
     }
-
 }

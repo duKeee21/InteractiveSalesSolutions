@@ -4,16 +4,11 @@ public class Customer implements Comparable<Customer> {
     final LocalDateTime orderDate;
     final String companyName;
     final double orderCount;
-//    final double amountOrder;
 
     public Customer(LocalDateTime orderDate, String companyName, double orderCount) {
         this.orderDate = orderDate;
         this.companyName = companyName;
         this.orderCount = orderCount;
-    }
-
-    public LocalDateTime getOrderDate() {
-        return orderDate;
     }
 
     public String getCompanyName() {
@@ -26,6 +21,7 @@ public class Customer implements Comparable<Customer> {
 
     @Override
     public int compareTo(Customer customer) {
+
         return this.orderDate.compareTo(customer.orderDate);
     }
 }

@@ -3,11 +3,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterForTxt implements CustomerSource {
+public class AdapterReader implements CustomerSource {
     private final String path;
     private final String splitter;
 
-    public AdapterForTxt(String path, String splitter) {
+    public AdapterReader(String path, String splitter) {
         this.path = path;
         this.splitter = splitter;
     }
@@ -15,7 +15,7 @@ public class AdapterForTxt implements CustomerSource {
     MyReader myReader = new MyReader();
 
     @Override
-    public List<Customer> read() throws IOException {
+    public List<Customer> readCustomers() throws IOException {
         List<Customer> customers = new ArrayList<>();
         for (String line : myReader.readLines(path)) {
             String[] parts = line.split(splitter);
@@ -26,5 +26,4 @@ public class AdapterForTxt implements CustomerSource {
         }
         return customers;
     }
-
 }
