@@ -1,21 +1,22 @@
+package CustomerDataSource;
+
+import io.MyReader;
+import model.Customer;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterReader implements CustomerSource {
-    private final String path;
-    private final String splitter;
+public class CustomersReader {
+    String splitter;
+    MyReader myReader = new MyReader();
 
-    public AdapterReader(String path, String splitter) {
-        this.path = path;
+    public CustomersReader(String splitter) {
         this.splitter = splitter;
     }
 
-    MyReader myReader = new MyReader();
-
-    @Override
-    public List<Customer> readCustomers() throws IOException {
+    public List<Customer> readCustomers(String path) throws IOException {
         List<Customer> customers = new ArrayList<>();
         for (String line : myReader.readLines(path)) {
             String[] parts = line.split(splitter);
