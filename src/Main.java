@@ -1,4 +1,4 @@
-import CustomerDataSource.CustomerSource;
+import api.CustomerSource;
 import adapter.AdapterHash;
 import adapter.AdapterPipe;
 import io.MyWriterToFileTxt;
@@ -12,11 +12,11 @@ void main() throws IOException {
     String filePathPipe = "discount_day.txt";
     String filePathHash = "discount_day_without_ext";
 
-    CustomerSource customersHash = new AdapterHash(filePathHash);
-    CustomerSource customersPipe = new AdapterPipe(filePathPipe);
+    CustomerSource customersHash = new AdapterHash();
+    CustomerSource customersPipe = new AdapterPipe();
 
-    List<Customer> customersFileTxt = customersPipe.readOrders();
-    List<Customer> customersFile = customersHash.readOrders();
+    List<Customer> customersFileTxt = customersHash.readCustomers(filePathHash);
+    List<Customer> customersFile = customersPipe.readCustomers(filePathPipe);
 
     DiscountCalculator discountCalculator = new DiscountCalculator(50, 0.5, 0.05);
 
