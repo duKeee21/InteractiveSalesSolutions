@@ -9,15 +9,22 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public class CalculateAllOrder {
+public class OrderCalculationService {
 
-    private final CustomerSource customersHash = new AdapterHash();
-    private final CustomerSource customersPipe = new AdapterPipe();
-    private final MergerCustomersFrom2files merger = new MergerCustomersFrom2files();
-    private final OrderExtractionService orderExtractionService = new OrderExtractionService();
+    private final CustomerSource customersHash;
+    private final CustomerSource customersPipe;
+    private final MergerCustomersFrom2files merger;
+    private final OrderExtractionService orderExtractionService;
+
+    public OrderCalculationService() {
+        this.customersHash =  new AdapterHash();
+        this.customersPipe = new AdapterPipe();
+        this.merger = new MergerCustomersFrom2files();
+        this.orderExtractionService = new OrderExtractionService();
+    }
 
 
-    public void calculate(String filePathHash, String filePathPipe, String resultFile, double pricePerKg, double discount, double discountStep) throws IOException {
+    public void calculateOrders(String filePathHash, String filePathPipe, String resultFile, double pricePerKg, double discount, double discountStep) throws IOException {
 
         DiscountCalculator discountCalculator = new DiscountCalculator(pricePerKg, discount, discountStep);
 
@@ -35,5 +42,3 @@ public class CalculateAllOrder {
         myWriterToFileTxt.write(result, resultFile);
     }
 }
-
-
