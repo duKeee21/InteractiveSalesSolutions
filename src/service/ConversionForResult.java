@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ConversionForResult {
-    public Map<String, Double> conversion(List<Customer> customers, List<Double> discounts) {
+class ConversionForResult {
+    protected Map<String, Double> conversion(List<Customer> customers, List<Double> discounts) {
 
         Map<String, Double> result = new HashMap<>();
         for (int i = 0; i < customers.size(); i++) {

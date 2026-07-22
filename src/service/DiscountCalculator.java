@@ -3,7 +3,7 @@ package service;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DiscountCalculator {
+ class DiscountCalculator {
 
     private final double pricePerKg;
     private final double discount;
