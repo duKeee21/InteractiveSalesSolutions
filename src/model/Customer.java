@@ -2,7 +2,7 @@ package model;
 
 import java.time.LocalDateTime;
 
-public class Customer implements Comparable<Customer> {
+public class Customer {
     final LocalDateTime orderDate;
     final String companyName;
     final double orderCount;
@@ -21,9 +21,7 @@ public class Customer implements Comparable<Customer> {
         return orderCount;
     }
 
-    @Override
-    public int compareTo(Customer customer) {
-
-        return this.orderDate.compareTo(customer.orderDate);
+    public LocalDateTime getOrderDate() {
+        return orderDate;
     }
 }

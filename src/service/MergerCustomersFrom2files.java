@@ -12,9 +12,6 @@ class MergerCustomersFrom2files {
         List<Customer> mergedCustomers = new ArrayList<>();
         mergedCustomers.addAll(customersFromFile1);
         mergedCustomers.addAll(customersFromFile2);
-
-        mergedCustomers.sort(null);
-
         return mergedCustomers;
     }
 }

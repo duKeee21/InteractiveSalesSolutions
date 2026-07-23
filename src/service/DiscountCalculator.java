@@ -3,22 +3,22 @@ package service;
 import java.util.ArrayList;
 import java.util.List;
 
- class DiscountCalculator {
+class DiscountCalculator {
 
-    private final double pricePerKg;
-    private final double discount;
-    private final double discountStep;
+    private final DiscountConfig config;
 
-    public DiscountCalculator(double pricePerKg, double discount, double discountStep) {
-        this.pricePerKg = pricePerKg;
-        this.discount = discount;
-        this.discountStep = discountStep;
+    public DiscountCalculator(DiscountConfig config) {
+        this.config = config;
     }
 
     public List<Double> calculateOrder(List<Double> order) {
         if (order == null || order.isEmpty()) {
             return new ArrayList<>();
         }
+
+        double pricePerKg = config.getPricePerKg();
+        double discount = config.getDiscount();
+        double discountStep = config.getDiscountStep();
 
         List<Double> money = new ArrayList<>();
         double currentDiscount = discount;
