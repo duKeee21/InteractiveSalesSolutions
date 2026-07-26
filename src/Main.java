@@ -8,6 +8,7 @@ void main() throws IOException {
     OrderCalculationService calculate = new OrderCalculationService();
     DiscountConfig config = new DiscountConfig(50.0, 0.5, 0.05);
 
-    calculate.calculateOrders(filePathHash, filePathPipe, config);
+    calculate.calculateOrders(filePathHash, config);
+    calculate.calculateOrders(filePathPipe, config);
 
 }

@@ -3,6 +3,7 @@ package service;
 import adapter.AdapterHash;
 import adapter.AdapterPipe;
 import api.CustomerSource;
+import io.MyReader;
 import io.MyWriterToFileTxt;
 import model.Customer;
 
@@ -15,36 +16,45 @@ public class OrderCalculationService {
 
     private final CustomerSource customersHash;
     private final CustomerSource customersPipe;
-    private final MergerCustomersFrom2files merger;
+    private final MyReader myReader;
     private final OrderExtractionService orderExtractionService;
 
     public OrderCalculationService() {
         this.customersHash = new AdapterHash();
         this.customersPipe = new AdapterPipe();
-        this.merger = new MergerCustomersFrom2files();
+        this.myReader = new MyReader();
         this.orderExtractionService = new OrderExtractionService();
     }
 
 
-    public void calculateOrders(String filePathHash, String filePathPipe, DiscountConfig config) throws IOException {
+    public void calculateOrders(String filePath, DiscountConfig config) throws IOException {
 
-        DiscountCalculator discountCalculator = new DiscountCalculator(config);
+        String firstLine = myReader.readFirstLine(filePath);
 
-        List<Customer> customersFileTxt = customersHash.readCustomers(filePathHash);
-        List<Customer> customersFile = customersPipe.readCustomers(filePathPipe);
+        CustomerSource adapter;
 
-        List<Customer> mergedCustomers = merger.mergeCustomers(customersFile, customersFileTxt);
+        if (firstLine.contains("#")) {
 
-        List<Customer> sortedCustomers = mergedCustomers.stream()
+            adapter = customersHash;
+        } else {
+
+            adapter = customersPipe;
+        }
+
+        List<Customer> customersFromFile = adapter.readCustomers(filePath);
+
+        List<Customer> sortedCustomers = customersFromFile.stream()
                 .sorted(Comparator.comparing(Customer::getOrderDate).reversed())
                 .toList();
 
         List<Double> allOrderCounts = orderExtractionService.extractOrder(sortedCustomers);
+
+        DiscountCalculator discountCalculator = new DiscountCalculator(config);
         List<Double> allMoney = discountCalculator.calculateOrder(allOrderCounts);
 
         ConversionForResult conversionForResult = new ConversionForResult();
 
-        Map<String, Double> result = conversionForResult.conversion(mergedCustomers, allMoney);
+        Map<String, Double> result = conversionForResult.conversion(sortedCustomers, allMoney);
 
         MyWriterToFileTxt myWriterToFileTxt = new MyWriterToFileTxt();
         myWriterToFileTxt.write(result);
